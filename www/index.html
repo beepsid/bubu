@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loading...</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+
+    .splash-container {
+      text-align: center;
+      position: relative;
+    }
+
+    .main-cat {
+      font-size: 120px;
+      animation: catAppear 2s ease-in-out;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .main-cat:hover {
+      transform: scale(1.1);
+    }
+
+    .wink {
+      animation: wink 1s ease-in-out 2.5s;
+    }
+
+    .small-cats {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .small-cat {
+      position: absolute;
+      font-size: 40px;
+      opacity: 0;
+      animation: bounce-out 1.5s ease-out 3.5s forwards;
+    }
+
+    .small-cat:nth-child(1) { animation-delay: 3.5s; transform: translate(-100px, -80px); }
+    .small-cat:nth-child(2) { animation-delay: 3.7s; transform: translate(100px, -60px); }
+    .small-cat:nth-child(3) { animation-delay: 3.9s; transform: translate(-80px, 100px); }
+    .small-cat:nth-child(4) { animation-delay: 4.1s; transform: translate(120px, 80px); }
+
+    .app-name {
+      margin-top: 30px;
+      font-size: 28px;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      opacity: 0;
+      animation: fadeIn 1s ease-in 4.5s forwards;
+    }
+
+    @keyframes catAppear {
+      0% { 
+        opacity: 0; 
+        transform: scale(0.3) rotate(-180deg); 
+      }
+      70% { 
+        transform: scale(1.1) rotate(10deg); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg); 
+      }
+    }
+
+    @keyframes wink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      45% { transform: scaleY(0.1); }
+    }
+
+    @keyframes bounce-out {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff69b4;
+      font-size: 20px;
+      opacity: 0;
+      animation: floatHeart 3s ease-in-out infinite;
+    }
+
+    @keyframes floatHeart {
+      0% { 
+        opacity: 0; 
+        transform: translateY(100vh) scale(0); 
+      }
+      10% { 
+        opacity: 1; 
+        transform: translateY(90vh) scale(1); 
+      }
+      90% { 
+        opacity: 1; 
+        transform: translateY(-10vh) scale(1); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translateY(-20vh) scale(0); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+  
+  <div class="splash-container">
+    <div class="main-cat wink" onclick="skipToApp()">🐱</div>
+    
+    <div class="small-cats">
+      <div class="small-cat">🐾</div>
+      <div class="small-cat">🐾</div>
+      <div class="small-cat">🐾</div>
+      <div class="small-cat">🐾</div>
+    </div>
+    
+    <div class="app-name">Made with 💕 for my bubu</div>
+  </div>
+
+  <script>
+    // Create floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '💕';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDelay = Math.random() * 3 + 's';
+      document.getElementById('hearts').appendChild(heart);
+      
+      setTimeout(() => {
+        heart.remove();
+      }, 3000);
+    }
+
+    // Create hearts periodically
+    setInterval(createHeart, 800);
+
+    // Check if user is already logged in
+    const userRole = localStorage.getItem('userRole');
+    const targetPage = userRole ? 'main.html' : 'login.html';
+    
+    // Auto transition after 6 seconds
+    setTimeout(() => {
+      window.location.href = targetPage;
+    }, 6000);
+
+    // Skip to appropriate page on click
+    function skipToApp() {
+      window.location.href = targetPage;
+    }
+  </script>
+</body>
+</html>
