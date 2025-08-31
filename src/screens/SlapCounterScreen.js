@@ -216,7 +216,7 @@ export default function SlapCounterScreen() {
 
         {/* Romantic Message */}
         <View style={[commonStyles.romanticCard, { marginTop: theme.spacing.xl, alignItems: 'center' }]}>
-          <Ionicons name="hand-left" size={32} color={theme.colors.primary} />
+          <Ionicons name="hand-left" size={32} color={theme.colors.iconContrast} />
           <Text style={[commonStyles.scriptText, { marginTop: theme.spacing.md, textAlign: 'center' }]}>
             "Each playful slap is a reminder of our silly, loving moments together 💕"
           </Text>
@@ -230,7 +230,7 @@ export default function SlapCounterScreen() {
           
           <View style={commonStyles.row}>
             <View style={{ alignItems: 'center', flex: 1 }}>
-              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.primary }]}>
+              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.iconContrast }]}>
                 {Math.floor(slapCount / 7)}
               </Text>
               <Text style={[commonStyles.bodyText, { fontSize: theme.fontSizes.sm, color: theme.colors.textSecondary }]}>
@@ -239,7 +239,7 @@ export default function SlapCounterScreen() {
             </View>
             
             <View style={{ alignItems: 'center', flex: 1 }}>
-              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.primary }]}>
+              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.iconContrast }]}>
                 {slapCount * 2}
               </Text>
               <Text style={[commonStyles.bodyText, { fontSize: theme.fontSizes.sm, color: theme.colors.textSecondary }]}>
@@ -248,7 +248,7 @@ export default function SlapCounterScreen() {
             </View>
             
             <View style={{ alignItems: 'center', flex: 1 }}>
-              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.primary }]}>
+              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.iconContrast }]}>
                 ∞
               </Text>
               <Text style={[commonStyles.bodyText, { fontSize: theme.fontSizes.sm, color: theme.colors.textSecondary }]}>

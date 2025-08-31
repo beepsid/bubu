@@ -358,7 +358,7 @@ export default function AlertsScreen() {
                     commonStyles.bodyText,
                     {
                       fontFamily: theme.fonts.bold,
-                      color: theme.colors.primary,
+                      color: theme.colors.iconContrast,
                     },
                   ]}
                 >
@@ -383,7 +383,7 @@ export default function AlertsScreen() {
                     commonStyles.bodyText,
                     {
                       fontFamily: theme.fonts.bold,
-                      color: theme.colors.primary,
+                      color: theme.colors.iconContrast,
                     },
                   ]}
                 >
@@ -408,7 +408,7 @@ export default function AlertsScreen() {
                     commonStyles.bodyText,
                     {
                       fontFamily: theme.fonts.bold,
-                      color: theme.colors.primary,
+                      color: theme.colors.iconContrast,
                     },
                   ]}
                 >

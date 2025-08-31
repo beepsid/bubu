@@ -138,7 +138,7 @@ export default function HomeScreen({ navigation }) {
 
           {/* Slap Counter Preview */}
           <View style={[commonStyles.romanticCard, { alignItems: 'center' }]}>
-            <Text style={[commonStyles.subtitle, { color: theme.colors.primary }]}>
+            <Text style={[commonStyles.subtitle, { color: theme.colors.iconContrast }]}>
               Slaps Received 👋
             </Text>
             <Text style={[commonStyles.title, { fontSize: theme.fontSizes.huge, color: theme.colors.heart }]}>
@@ -250,7 +250,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={[commonStyles.scriptText, { marginTop: theme.spacing.sm, textAlign: 'center' }]}>
               "Every day with you is a beautiful adventure. You make my world brighter just by being in it."
             </Text>
-            <Text style={[commonStyles.bodyText, { marginTop: theme.spacing.sm, fontFamily: theme.fonts.semiBold, color: theme.colors.primary }]}>
+            <Text style={[commonStyles.bodyText, { marginTop: theme.spacing.sm, fontFamily: theme.fonts.semiBold, color: theme.colors.iconContrast }]}>
               - Your Loving Boyfriend 💕
             </Text>
           </View>

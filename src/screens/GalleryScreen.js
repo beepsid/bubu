@@ -473,7 +473,7 @@ export default function GalleryScreen() {
           
           <View style={commonStyles.row}>
             <View style={{ alignItems: 'center', flex: 1 }}>
-              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.primary }]}>
+              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.iconContrast }]}>
                 {galleryImages.length}
               </Text>
               <Text style={[commonStyles.bodyText, { fontSize: theme.fontSizes.sm, color: theme.colors.textSecondary }]}>
@@ -491,7 +491,7 @@ export default function GalleryScreen() {
             </View>
             
             <View style={{ alignItems: 'center', flex: 1 }}>
-              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.primary }]}>
+              <Text style={[commonStyles.bodyText, { fontFamily: theme.fonts.bold, color: theme.colors.iconContrast }]}>
                 ∞
               </Text>
               <Text style={[commonStyles.bodyText, { fontSize: theme.fontSizes.sm, color: theme.colors.textSecondary }]}>
