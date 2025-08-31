@@ -256,19 +256,17 @@ eas build --platform android
 - Test on physical device for best performance
 - Use `expo doctor` to check for common issues
 
-## 💖 Final Notes
+##  Final Notes
 
-This app is built with love and attention to detail. Every feature is designed to create intimate, romantic moments between you two. The offline-first approach ensures your private moments stay private, while the Google Sheets integration adds a fun, connected element to the slap counter.
+The offline-first approach ensures your private moments stay private, while the Google Sheets integration adds a fun, connected element to the slap counter.
 
 Remember to:
 
 - Personalize all the content with your own messages
 - Add your actual photos to the gallery
 - Test thoroughly before gifting
-- Keep the secret admin features to yourself! 😉
-
-**Happy Birthday to your beautiful girlfriend! 🎂💕**
+- Keep the secret admin features to yourself!
 
 ---
 
-_Built with React Native, Expo, and lots of love_ ❤️
+_Built with React Native, Expo
