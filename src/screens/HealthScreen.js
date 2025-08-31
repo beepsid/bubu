@@ -302,7 +302,7 @@ export default function HealthScreen() {
           {/* Header */}
           <View style={{ alignItems: 'center', padding: theme.spacing.md, marginBottom: theme.spacing.lg }}>
             <View style={[commonStyles.heartContainer, { marginBottom: theme.spacing.md }]}>
-              <Ionicons name="fitness" size={32} color={theme.colors.primary} />
+              <Ionicons name="fitness" size={32} color={theme.colors.iconContrast} />
             </View>
             <Text style={[commonStyles.title, { marginBottom: theme.spacing.sm }]}>
               Health Tracker 💪

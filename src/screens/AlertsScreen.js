@@ -326,7 +326,7 @@ export default function AlertsScreen() {
               <Ionicons
                 name="notifications"
                 size={32}
-                color={theme.colors.primary}
+                color={theme.colors.iconContrast}
               />
             </View>
             <Text

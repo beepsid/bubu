@@ -249,7 +249,7 @@ export default function DiaryScreen() {
         {/* Header */}
         <View style={{ alignItems: 'center', marginBottom: theme.spacing.xl }}>
           <View style={[commonStyles.heartContainer, { marginBottom: theme.spacing.md }]}>
-            <Ionicons name="book" size={32} color={theme.colors.primary} />
+            <Ionicons name="book" size={32} color={theme.colors.iconContrast} />
           </View>
           <Text style={[commonStyles.title, { marginBottom: theme.spacing.sm }]}>
             His Diary for Me 💕

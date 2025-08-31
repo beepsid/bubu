@@ -16,6 +16,7 @@ export const theme = {
     overlay: 'rgba(0,0,0,0.3)', // Modal overlay
     heart: '#FF69B4',         // Hot pink for hearts
     romantic: '#F8BBD9',      // Romantic pink
+    iconContrast: '#E91E63',  // Deep pink/magenta for icons on pink backgrounds
   },
   
   fonts: {

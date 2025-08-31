@@ -354,7 +354,7 @@ export default function GalleryScreen() {
         {/* Header */}
         <View style={{ alignItems: 'center', padding: theme.spacing.md, marginBottom: theme.spacing.lg }}>
           <View style={[commonStyles.heartContainer, { marginBottom: theme.spacing.md }]}>
-            <Ionicons name="images" size={32} color={theme.colors.primary} />
+            <Ionicons name="images" size={32} color={theme.colors.iconContrast} />
           </View>
           <Text style={[commonStyles.title, { marginBottom: theme.spacing.sm }]}>
             Our Memories 📸
