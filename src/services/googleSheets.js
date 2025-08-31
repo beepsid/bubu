@@ -1,12 +1,16 @@
-import axios from 'axios';
-import { getSlapCount, setSlapCount, getLastSyncTime, setLastSyncTime } from './storage';
+import axios from "axios";
+import {
+  getSlapCount,
+  setSlapCount,
+  getLastSyncTime,
+  setLastSyncTime,
+} from "./storage";
 
-// Google Sheets configuration
+// Google Sheets configuration - using environment variables for security
 const GOOGLE_SHEETS_CONFIG = {
-  // Replace with your Google Sheets API details
-  SHEET_ID: 'YOUR_GOOGLE_SHEET_ID',
-  API_KEY: 'YOUR_GOOGLE_API_KEY',
-  RANGE: 'Sheet1!A1:B2', // Adjust range as needed
+  SHEET_ID: process.env.EXPO_PUBLIC_GOOGLE_SHEET_ID || "YOUR_SHEET_ID_HERE",
+  API_KEY: process.env.EXPO_PUBLIC_GOOGLE_API_KEY || "YOUR_API_KEY_HERE",
+  RANGE: "Sheet1!A1:B2",
 };
 
 // Google Sheets API URL
@@ -24,25 +28,25 @@ export const syncSlapCountToSheet = async (count) => {
     const timestamp = new Date().toISOString();
     const data = {
       values: [
-        ['Slap Count', 'Last Updated'],
-        [count.toString(), timestamp]
-      ]
+        ["Slap Count", "Last Updated"],
+        [count.toString(), timestamp],
+      ],
     };
 
     const response = await axios.put(updateSheetUrl(), data, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
     if (response.status === 200) {
       await setLastSyncTime(timestamp);
-      console.log('Slap count synced to Google Sheets:', count);
+      console.log("Slap count synced to Google Sheets:", count);
       return true;
     }
     return false;
   } catch (error) {
-    console.error('Error syncing to Google Sheets:', error);
+    console.error("Error syncing to Google Sheets:", error);
     return false;
   }
 };
@@ -51,7 +55,7 @@ export const syncSlapCountToSheet = async (count) => {
 export const getSlapCountFromSheet = async () => {
   try {
     const response = await axios.get(getSheetUrl());
-    
+
     if (response.status === 200 && response.data.values) {
       const values = response.data.values;
       if (values.length > 1 && values[1][0]) {
@@ -61,7 +65,7 @@ export const getSlapCountFromSheet = async () => {
     }
     return 0;
   } catch (error) {
-    console.error('Error getting slap count from Google Sheets:', error);
+    console.error("Error getting slap count from Google Sheets:", error);
     return null;
   }
 };
@@ -71,27 +75,27 @@ export const syncSlapCount = async () => {
   try {
     const localCount = await getSlapCount();
     const remoteCount = await getSlapCountFromSheet();
-    
+
     if (remoteCount === null) {
       // Can't connect to sheets, use local count
       return localCount;
     }
-    
+
     // Use the higher count (in case of offline increments)
     const finalCount = Math.max(localCount, remoteCount);
-    
+
     // Update both local and remote if needed
     if (finalCount !== localCount) {
       await setSlapCount(finalCount);
     }
-    
+
     if (finalCount !== remoteCount) {
       await syncSlapCountToSheet(finalCount);
     }
-    
+
     return finalCount;
   } catch (error) {
-    console.error('Error syncing slap count:', error);
+    console.error("Error syncing slap count:", error);
     // Return local count as fallback
     return await getSlapCount();
   }
@@ -103,18 +107,18 @@ export const incrementAndSyncSlapCount = async () => {
     // Get current local count
     const currentCount = await getSlapCount();
     const newCount = currentCount + 1;
-    
+
     // Update local storage immediately
     await setSlapCount(newCount);
-    
+
     // Try to sync to Google Sheets (don't wait for it)
-    syncSlapCountToSheet(newCount).catch(error => {
-      console.log('Background sync failed, will retry later:', error);
+    syncSlapCountToSheet(newCount).catch((error) => {
+      console.log("Background sync failed, will retry later:", error);
     });
-    
+
     return newCount;
   } catch (error) {
-    console.error('Error incrementing slap count:', error);
+    console.error("Error incrementing slap count:", error);
     return await getSlapCount();
   }
 };
@@ -125,7 +129,7 @@ export const testGoogleSheetsConnection = async () => {
     const response = await axios.get(getSheetUrl());
     return response.status === 200;
   } catch (error) {
-    console.error('Google Sheets connection test failed:', error);
+    console.error("Google Sheets connection test failed:", error);
     return false;
   }
 };

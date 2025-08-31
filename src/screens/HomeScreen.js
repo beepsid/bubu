@@ -160,11 +160,11 @@ export default function HomeScreen({ navigation }) {
 
             <View style={{ flexDirection: 'row', marginBottom: theme.spacing.sm }}>
               <QuickActionCard
-                title="Alerts"
-                subtitle="Smart Reminders"
-                icon="notifications"
+                title="Slap Counter"
+                subtitle="Fun Counter"
+                icon="hand-left"
                 color={theme.colors.secondary}
-                onPress={() => handleQuickNavigation('Alerts')}
+                onPress={() => handleQuickNavigation('Counter')}
               />
               <QuickActionCard
                 title="His Diary"
@@ -177,18 +177,18 @@ export default function HomeScreen({ navigation }) {
 
             <View style={{ flexDirection: 'row' }}>
               <QuickActionCard
+                title="Alerts"
+                subtitle="Smart Reminders"
+                icon="notifications"
+                color={theme.colors.warning}
+                onPress={() => handleQuickNavigation('Alerts')}
+              />
+              <QuickActionCard
                 title="Health"
                 subtitle="Wellness Tracker"
                 icon="fitness"
-                color={theme.colors.warning}
-                onPress={() => handleQuickNavigation('Health')}
-              />
-              <QuickActionCard
-                title="Poems"
-                subtitle="For You"
-                icon="library"
                 color={theme.colors.success}
-                onPress={() => handleQuickNavigation('Poems')}
+                onPress={() => handleQuickNavigation('Health')}
               />
             </View>
           </View>
