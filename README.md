@@ -1,116 +1,274 @@
-# Bubu App 💕🐱
+# Bubu 💕 - Romantic Android App
 
-A personalized mobile app created with love for my girlfriend's birthday. This is our private space with features designed just for us.
+A private, offline-first React Native app built with love as the perfect birthday gift for your girlfriend.
 
-## 🎯 What This App Does
+## 🎁 **What This App Does**
 
-- **Love Counter**: Track how many times I'd slap her for talking shit about herself
-- **Period Calendar**: Help her track her cycle and moods 🌸
-- **My Poems**: All the poems I write just for her 📜
-- **Photo Gallery**: Our shared memories and photos 📸
-- **My Diary**: My thoughts and feelings 📝
-- **Special Surprises**: Secret features just for her 🎁
+A beautiful, romantic Android app with 6 special features:
 
-## 🔐 Security & Privacy
+- 👋 **Slap Counter** - Fun counter with secret admin controls & Google Sheets sync
+- 🔔 **Smart Alerts** - Personalized reminders for health, medication, and daily activities
+- 💪 **Health Tracker** - Wellness tracking for water, sleep, exercise, mood, and more
+- 📖 **His Diary** - Read-only romantic diary entries from you to her
+- 🎭 **Poems** - Collection of love poems written by you
+- 📸 **Photo Gallery** - Private photo collection with favorites
 
-- **Role-based access**: Different permissions for bf/gf
-- **Private authentication**: Only we can access the app
-- **Secure data**: All personal content stays between us
-- **Offline-first**: Works without internet for privacy
+## 🎁 Features
 
-## 🛠️ Tech Stack
+### 👋 **Slap Counter**
 
-- **Frontend**: HTML, CSS, JavaScript
-- **Mobile**: Capacitor (for Android)
-- **Authentication**: Role-based login system
-- **Storage**: Local storage + Firebase (planned)
-- **Design**: Custom CSS with love-themed UI
+- Fun, affectionate counter with heart animations
+- Hidden admin button (5 taps on heart) for boyfriend to increment
+- Online sync with Google Sheets API
+- Offline-first with automatic sync when online
 
-## 📱 Features by User
+### 🔔 **Smart Alerts**
 
-### Boyfriend Mode (Me)
+- Personalized reminders for medications, water intake, exercise, sleep, and meals
+- Toggle alerts on/off without deleting them
+- Color-coded categories with beautiful icons
+- Custom alert messages and timing
 
-- ✅ Can update the love counter
-- ✅ Write poems for her
-- ✅ Add diary entries
-- ✅ Upload photos to gallery
-- ✅ View her calendar (read-only)
+### 💪 **Health Tracker**
 
-### Girlfriend Mode (Her)
+- Track daily wellness metrics: water, sleep, exercise, mood, weight, temperature
+- Visual dashboard with today's summary statistics
+- Historical data with trends and patterns
+- Easy numeric and text input for quick logging
 
-- ✅ View love counter (read-only)
-- ✅ Read my poems
-- ✅ Update period calendar
-- ✅ Upload photos to gallery
-- ✅ Read my diary (if shared)
+### 📖 **His Diary (Read-Only)**
 
-## 🚀 Development Setup
+- Romantic diary entries written by boyfriend
+- Beautiful typography and elegant design
+- Read-only for girlfriend - she can only view, not edit
+- Preloaded with sample love messages
+
+### 🎭 **Poems Collection**
+
+- Categorized poems written from the heart
+- Elegant script typography for romantic feel
+- Read-only poetry collection
+- Categories: Love, Beauty, Forever, Daily Life
+
+### 📸 **Photo Gallery**
+
+- Masonry-style photo grid
+- Zoomable full-screen image viewer
+- Favorites system with heart icons
+- Bundled images (no internet required)
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js
-- Android Studio (for mobile builds)
-- Java 8+
+- Node.js (v16 or higher)
+- Expo CLI: `npm install -g @expo/cli`
+- Android Studio (for Android development)
+- Physical Android device or emulator
 
 ### Installation
 
+1. **Clone and Install**
+
+   ```bash
+   cd bubu-app
+   npm install
+   ```
+
+2. **Add Fonts** (Optional but recommended)
+
+   - Download fonts from Google Fonts (see `assets/fonts/README.md`)
+   - Place font files in `assets/fonts/` directory
+
+3. **Add Images**
+
+   - Replace placeholder images in `assets/images/`
+   - Update image paths in `GalleryScreen.js`
+   - Create custom app icon and splash screen
+
+4. **Configure Google Sheets** (For slap counter sync)
+
+   - Create a Google Sheet with slap counter data
+   - Get Google Sheets API key
+   - Update `src/services/googleSheets.js` with your credentials
+
+5. **Customize Content**
+   - Edit diary entries in `src/services/dataSeeder.js`
+   - Add your own poems and love messages
+   - Personalize the romantic messages throughout the app
+
+### Running the App
+
 ```bash
-# Clone the repo
-git clone [your-repo-url]
-cd bubu
+# Start development server
+npm start
 
-# Install dependencies
-npm install
+# Run on Android
+npm run android
 
-# Add Android platform
-npx cap add android
-
-# Copy web assets
-npx cap copy android
-
-# Run on Android device
-npx cap run android
+# Build for production
+expo build:android
 ```
 
-### Development Workflow
+## 🎨 Customization
 
-```bash
-# Make changes to www/ folder
-# Then sync to Android
-npx cap copy android
-npx cap run android
+### Theme Colors
+
+Edit `src/styles/theme.js` to customize the romantic color palette:
+
+```javascript
+colors: {
+  primary: '#FFB6C1',     // Light pink
+  secondary: '#E6E6FA',   // Lavender
+  accent: '#FFC0CB',      // Pink
+  // ... customize as needed
+}
 ```
 
-## 🎨 Design Philosophy
+### Content
 
-- **Soft pink gradients** - Her favorite colors
-- **Cat theme** - Because she loves cats 🐱
-- **Rounded everything** - Soft, feminine design
-- **Micro-animations** - Delightful interactions
-- **Love-focused** - Every detail made with care
+- **Diary Entries**: Edit `sampleDiaryEntries` in `src/services/dataSeeder.js`
+- **Poems**: Edit `samplePoems` in `src/services/dataSeeder.js`
+- **Gallery**: Replace images in `assets/images/gallery/`
+- **Messages**: Update romantic messages throughout the screens
 
-## 📅 Development Timeline
+### App Identity
 
-- **Phase 1**: ✅ Basic UI and authentication
-- **Phase 2**: 🚧 Period calendar functionality
-- **Phase 3**: 📝 Poems and diary features
-- **Phase 4**: 📸 Photo gallery
-- **Phase 5**: 🔄 Real-time sync with Firebase
-- **Phase 6**: 🎁 Special surprise features
+- **App Name**: Change in `app.json`
+- **Package Name**: Update `android.package` in `app.json`
+- **Icons**: Replace `assets/icon.png` and `assets/splash.png`
 
-## 💝 Special Notes
+## 🔒 Privacy & Personal Content
 
-This app is a labor of love, created specifically for my girlfriend's birthday. Every feature, color, and animation is designed with her in mind. It's not just an app - it's a digital love letter.
+**Your personal content is protected!** This repository only contains the app code. All personal content is automatically excluded from Git:
 
-**Deadline**: May 5th, 2026 (Her Birthday) 🎂
+- 📖 **Diary entries** (`content/diary/*.txt`) - Your personal diary entries stay private
+- 🎭 **Poems** (`content/poems/*.txt`) - Personal poems remain on your device only
+- 📸 **Photos** - Any personal photos you add are excluded
+- 💪 **Health data** - All health tracking information stays local
+- 🔔 **Alert settings** - Your personal reminders remain private
 
-## 🔧 Current Status
+See `PRIVACY.md` for complete details on what's private vs. what's shared.
 
-- ✅ Splash screen with cat animation
-- ✅ Beautiful login system
-- ✅ Role-based dashboard
-- ✅ Love counter with animations
-- ✅ Navigation and logout
-- 🚧 Building individual features
+## 🔐 Secret Features (For Boyfriend)
 
-_Made with 💕 for the most amazing girl in the world_
+### Hidden Slap Counter Increment
+
+- Tap the heart icon 5 times quickly on the Slap Counter screen
+- Secret admin dialog will appear
+- Only you know this sequence!
+
+### Data Management
+
+- All diary entries and poems are preloaded during app installation
+- Use the database functions to add more content programmatically
+- Period data can be managed through the calendar interface
+
+## 📱 Google Sheets Integration
+
+### Setup Instructions
+
+1. Create a new Google Sheet
+2. Set up the sheet structure:
+   ```
+   A1: "Slap Count"    B1: "Last Updated"
+   A2: "0"             B2: "2024-01-01T00:00:00Z"
+   ```
+3. Get the Sheet ID from the URL
+4. Create a Google Cloud Project and enable Sheets API
+5. Generate an API key
+6. Update `src/services/googleSheets.js`:
+   ```javascript
+   const GOOGLE_SHEETS_CONFIG = {
+     SHEET_ID: "your-sheet-id-here",
+     API_KEY: "your-api-key-here",
+     RANGE: "Sheet1!A1:B2",
+   };
+   ```
+
+### Offline Behavior
+
+- App works completely offline
+- Slap counter increments are stored locally
+- Syncs with Google Sheets when internet is available
+- Uses the higher count if there's a discrepancy
+
+## 🏗️ Project Structure
+
+```
+bubu-app/
+├── src/
+│   ├── components/          # Reusable UI components
+│   ├── screens/            # Main app screens
+│   ├── services/           # Database, storage, API services
+│   ├── styles/             # Theme and styling
+│   └── utils/              # Helper functions
+├── assets/
+│   ├── fonts/              # Custom fonts
+│   ├── images/             # Gallery images and icons
+│   └── ...
+├── App.js                  # Main app entry point
+├── app.json               # Expo configuration
+└── package.json           # Dependencies
+```
+
+## 💕 Romantic Touches
+
+- **Heart Animations**: Floating hearts on slap counter increment
+- **Soft Color Palette**: Pastel pinks, lavenders, and creams
+- **Elegant Typography**: Mix of serif, sans-serif, and script fonts
+- **Personal Messages**: Romantic quotes and messages throughout
+- **Gentle Haptics**: Subtle vibrations for interactions
+- **Smooth Transitions**: Elegant animations between screens
+
+## 🎯 Building for Production
+
+### Android APK
+
+```bash
+# Build APK
+expo build:android
+
+# Or use EAS Build (recommended)
+npm install -g @expo/eas-cli
+eas build --platform android
+```
+
+### Signing and Distribution
+
+- Generate Android signing keys
+- Configure app signing in `app.json`
+- Build signed APK for distribution
+- Install directly on her phone (sideload)
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+- **Fonts not loading**: Check font files are in `assets/fonts/`
+- **Images not showing**: Verify image paths and file formats
+- **Google Sheets sync failing**: Check API key and sheet permissions
+- **App crashes**: Check console logs and ensure all dependencies are installed
+
+### Development Tips
+
+- Use `expo start --clear` to clear cache
+- Test on physical device for best performance
+- Use `expo doctor` to check for common issues
+
+## 💖 Final Notes
+
+This app is built with love and attention to detail. Every feature is designed to create intimate, romantic moments between you two. The offline-first approach ensures your private moments stay private, while the Google Sheets integration adds a fun, connected element to the slap counter.
+
+Remember to:
+
+- Personalize all the content with your own messages
+- Add your actual photos to the gallery
+- Test thoroughly before gifting
+- Keep the secret admin features to yourself! 😉
+
+**Happy Birthday to your beautiful girlfriend! 🎂💕**
+
+---
+
+_Built with React Native, Expo, and lots of love_ ❤️

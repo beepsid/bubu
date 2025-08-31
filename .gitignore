@@ -109,5 +109,106 @@ temp/
 google-services.json
 GoogleService-Info.plist
 
-# Keep personal content backed up - only ignore sensitive keys
-# (Personal content like poems, photos, diary should be backed up to GitHub)
+# Personal Content - Keep Private
+# Diary entries
+content/diary/*.txt
+content/diary/*
+!content/diary/README.md
+!content/diary/.gitkeep
+src/data/diary/
+diary/
+diaries/
+
+# Poems and personal writings
+content/poems/*.txt
+content/poems/*
+!content/poems/README.md
+!content/poems/.gitkeep
+src/data/poems/
+poems/
+writings/
+
+# Personal photos and images
+content/photos/
+content/images/
+assets/personal/
+assets/photos/
+assets/images/gallery/
+photos/
+images/personal/
+
+# Google Sheets API credentials and config
+google-sheets-config.js
+googlesheets-config.js
+*google*config*.js
+*sheets*config*.js
+
+# Any files with actual API keys or credentials
+*API_KEY*
+*SHEET_ID*
+*api-key*
+*sheet-id*
+*credentials*
+*secrets*
+
+# Personal data and databases
+*.db
+*.sqlite
+*.sqlite3
+personal-data/
+user-data/
+
+# Health and tracking data
+health-data/
+tracking-data/
+personal-stats/
+
+# Any personal configuration
+personal-config.json
+user-settings.json
+private-settings.json
+
+# Backup files with personal content
+*-backup.json
+*-personal.json
+*-private.json
+
+# Personal notes and documents
+notes/
+personal-notes/
+private-notes/
+*.personal.md
+*.private.md
+
+# Keep README files but ignore personal content
+# README.md files are kept for documentation
+
+# Specific personal file patterns
+*.diary
+*.poem
+*.personal
+*.private
+*-personal.*
+*-private.*
+
+# Love letters and personal messages
+love-letters/
+messages/
+personal-messages/
+
+# Any file with "bubu" personal content (keep app name but not personal content)
+*bubu-personal*
+*bubu-private*
+
+# Temporary personal files
+temp-personal/
+draft-poems/
+draft-diary/
+
+# Actual personal content files (but keep sample/template files)
+*real-*
+*actual-*
+*my-*
+*her-*
+*girlfriend-*
+*boyfriend-*

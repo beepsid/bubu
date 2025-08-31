@@ -1,17 +1,43 @@
 {
-  "name": "counter-app",
+  "name": "bubu-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@capacitor/android": "^7.4.2",
-    "@capacitor/cli": "^7.4.2",
-    "@capacitor/core": "^7.4.2"
-  }
+    "@expo/vector-icons": "^14.1.0",
+    "@expo/webpack-config": "^19.0.0",
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-native-community/cli-server-api": "^20.0.1",
+    "@react-navigation/bottom-tabs": "^6.5.11",
+    "@react-navigation/native": "^6.1.9",
+    "axios": "^1.6.2",
+    "expo": "~53.0.0",
+    "expo-font": "~13.3.2",
+    "expo-haptics": "~14.1.4",
+    "expo-linear-gradient": "~14.1.5",
+    "expo-splash-screen": "~0.30.10",
+    "expo-sqlite": "~15.2.14",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.6",
+    "react-native-calendars": "^1.1302.0",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-image-zoom-viewer": "^3.0.1",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1",
+    "react-native-super-grid": "^4.4.0",
+    "react-native-web": "~0.20.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "^19.1.12",
+    "@types/react-native": "^0.73.0"
+  },
+  "private": true
 }
