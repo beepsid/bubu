@@ -157,35 +157,32 @@ export const seedInitialData = async () => {
     const isSeeded = await getSetting('data_seeded');
 
     if (isSeeded === 'true') {
-      console.log('Data already seeded, skipping...');
       return;
     }
-
-    console.log('Seeding initial data...');
 
     // Use sample data for now (external loading disabled temporarily)
     for (const entry of sampleDiaryEntries) {
       await addDiaryEntry(entry.title, entry.content, entry.date);
     }
-    console.log('Sample diary entries seeded');
+
 
     for (const poem of samplePoems) {
       await addPoem(poem.title, poem.content, poem.category);
     }
-    console.log('Sample poems seeded');
+
 
     // Seed actual period data
     const periodData = generateActualPeriodData();
     for (const data of periodData) {
       await addPeriodData(data.date, data.type, data.notes);
     }
-    console.log('Actual period data seeded');
+
 
     // Mark as seeded
     await setSetting('data_seeded', 'true');
     await setSetting('app_version', '1.0.0');
 
-    console.log('Initial data seeding completed successfully!');
+
   } catch (error) {
     console.error('Error seeding initial data:', error);
   }
@@ -208,7 +205,7 @@ export const resetAllData = async () => {
     // This would require dropping and recreating tables
     // For now, just mark as not seeded so it re-seeds
     await setSetting('data_seeded', 'false');
-    console.log('Data reset - will re-seed on next app start');
+
   } catch (error) {
     console.error('Error resetting data:', error);
   }

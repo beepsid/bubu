@@ -79,7 +79,7 @@ const parsePoem = (content) => {
 // Load all diary entries from content
 export const loadDiaryFromFiles = async () => {
   try {
-    console.log('Loading diary entries from content...');
+
     
     for (const [dateKey, content] of Object.entries(diaryContent)) {
       const entry = parseDiaryEntry(content, dateKey);
@@ -90,11 +90,11 @@ export const loadDiaryFromFiles = async () => {
       
       if (!exists) {
         await addDiaryEntry(entry.title, entry.content, entry.date);
-        console.log(`Added diary entry: ${entry.title}`);
+
       }
     }
     
-    console.log('Diary entries loaded successfully!');
+
   } catch (error) {
     console.error('Error loading diary entries:', error);
   }
@@ -103,7 +103,7 @@ export const loadDiaryFromFiles = async () => {
 // Load all poems from content
 export const loadPoemsFromFiles = async () => {
   try {
-    console.log('Loading poems from content...');
+
     
     for (const [poemKey, content] of Object.entries(poemContent)) {
       const poem = parsePoem(content);
@@ -114,11 +114,11 @@ export const loadPoemsFromFiles = async () => {
       
       if (!exists) {
         await addPoem(poem.title, poem.content, poem.category);
-        console.log(`Added poem: ${poem.title}`);
+
       }
     }
     
-    console.log('Poems loaded successfully!');
+
   } catch (error) {
     console.error('Error loading poems:', error);
   }

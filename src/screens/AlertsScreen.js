@@ -21,16 +21,32 @@ import {
   updateAlert,
   deleteAlert,
   getAlertTypes,
+  createDefaultWaterAlerts,
 } from "../services/alertsService";
+import { notificationManager } from "../services/notificationManager";
+import { developmentNotificationService } from "../services/developmentNotificationService";
+import Constants from 'expo-constants';
+import ModernAlertModal from "../components/ModernAlertModal";
 
 export default function AlertsScreen() {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAlertModal, setShowAlertModal] = useState(false);
+  const [selectedAlertType, setSelectedAlertType] = useState("custom");
+  const [editingAlert, setEditingAlert] = useState(null);
   const navigationSystem = useNavigationSystem();
 
   useEffect(() => {
     loadAlerts();
+    initializeBackgroundService();
   }, []);
+
+  const initializeBackgroundService = async () => {
+
+    await developmentNotificationService.initialize();
+    const alertsData = await getAlerts();
+    await developmentNotificationService.scheduleAllAlerts(alertsData);
+  };
 
   const loadAlerts = async () => {
     try {
@@ -43,6 +59,59 @@ export default function AlertsScreen() {
     }
   };
 
+  const handleSetupWaterReminders = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    Alert.alert(
+      "Setup Water Reminders 💧",
+      "This will create 8 daily water reminders to help you drink 2L per day. Any existing water reminders will be replaced.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Setup Reminders",
+          onPress: async () => {
+            try {
+              await createDefaultWaterAlerts();
+              await loadAlerts(); // Refresh the list
+              
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+              
+              Alert.alert(
+                "Water Reminders Created! 💧",
+                "8 daily water reminders have been set up to help you stay hydrated throughout the day.",
+                [{ text: "Great!", style: "default" }]
+              );
+            } catch (error) {
+              console.error("Error creating water reminders:", error);
+              Alert.alert("Error", "Failed to create water reminders. Please try again.");
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleTestNotification = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    
+    const testAlert = {
+      id: 999,
+      type: 'water',
+      message: 'Test notification! 💧 This is how alerts will appear in SDK 54.',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      enabled: true
+    };
+    
+    // Check if we can use expo-notifications (SDK 54) or fallback to development service
+    const isExpoGo = Constants.appOwnership === 'expo';
+    if (isExpoGo) {
+      developmentNotificationService.simulateNotification(testAlert);
+    } else {
+      // In standalone app, we can use expo-notifications
+      developmentNotificationService.simulateNotification(testAlert);
+    }
+  };
+
   const handleAddAlert = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
@@ -50,72 +119,79 @@ export default function AlertsScreen() {
       { text: "Cancel", style: "cancel" },
       {
         text: "💊 Medication Reminder",
-        onPress: () => showAddAlertForm("medication"),
+        onPress: () => openAlertModal("medication"),
       },
-      { text: "💧 Water Reminder", onPress: () => showAddAlertForm("water") },
+      { text: "💧 Water Reminder", onPress: () => openAlertModal("water") },
       {
         text: "🏃‍♀️ Exercise Reminder",
-        onPress: () => showAddAlertForm("exercise"),
+        onPress: () => openAlertModal("exercise"),
       },
-      { text: "😴 Sleep Reminder", onPress: () => showAddAlertForm("sleep") },
-      { text: "🍎 Meal Reminder", onPress: () => showAddAlertForm("meal") },
-      { text: "📝 Custom Alert", onPress: () => showAddAlertForm("custom") },
+      { text: "😴 Sleep Reminder", onPress: () => openAlertModal("sleep") },
+      { text: "🍎 Meal Reminder", onPress: () => openAlertModal("meal") },
+      { text: "📝 Custom Alert", onPress: () => openAlertModal("custom") },
     ]);
   };
 
-  const showAddAlertForm = (type) => {
-    const alertTypes = getAlertTypes();
-    const alertInfo = alertTypes[type];
-
-    Alert.prompt(
-      `Add ${alertInfo.name}`,
-      `Enter details for your ${alertInfo.name.toLowerCase()}:`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Add Alert",
-          onPress: (text) =>
-            createAlert(type, text || alertInfo.defaultMessage),
-        },
-      ],
-      "plain-text",
-      alertInfo.defaultMessage
-    );
+  const openAlertModal = (type, alert = null) => {
+    setSelectedAlertType(type);
+    setEditingAlert(alert);
+    setShowAlertModal(true);
   };
 
-  const createAlert = async (type, message) => {
+  const handleSaveAlert = async (alertData) => {
     try {
-      const newAlert = await addAlert({
-        type,
-        message,
-        time: "09:00", // Default time
-        enabled: true,
-        frequency: "daily",
-      });
+      let savedAlert;
+      
+      if (alertData.id) {
+        // Update existing alert
+        savedAlert = await updateAlert(alertData.id, alertData);
+        setAlerts((prev) =>
+          prev.map((alert) =>
+            alert.id === alertData.id ? savedAlert : alert
+          )
+        );
+      } else {
+        // Create new alert
+        savedAlert = await addAlert(alertData);
+        setAlerts((prev) => [...prev, savedAlert]);
+      }
 
-      setAlerts((prev) => [...prev, newAlert]);
+      // Schedule the notification
+      if (savedAlert.enabled) {
+        await developmentNotificationService.scheduleAlert(savedAlert);
+      }
+
+      setShowAlertModal(false);
+      setEditingAlert(null);
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
       Alert.alert(
-        "Alert Added! ✅",
-        `Your ${type} reminder has been created.`,
+        alertData.id ? "Alert Updated! ✅" : "Alert Added! ✅",
+        `Your ${alertData.type} reminder has been ${alertData.id ? 'updated' : 'created'}.`,
         [{ text: "OK", style: "default" }]
       );
     } catch (error) {
-      console.error("Error creating alert:", error);
-      Alert.alert("Error", "Failed to create alert. Please try again.");
+      console.error("Error saving alert:", error);
+      Alert.alert("Error", "Failed to save alert. Please try again.");
     }
   };
 
   const toggleAlert = async (alertId, enabled) => {
     try {
-      await updateAlert(alertId, { enabled });
+      const updatedAlert = await updateAlert(alertId, { enabled });
       setAlerts((prev) =>
         prev.map((alert) =>
           alert.id === alertId ? { ...alert, enabled } : alert
         )
       );
+
+      // Schedule or cancel notification based on enabled state
+      if (enabled) {
+        await developmentNotificationService.scheduleAlert(updatedAlert);
+      } else {
+        await developmentNotificationService.cancelAlert(alertId);
+      }
 
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -135,6 +211,7 @@ export default function AlertsScreen() {
           onPress: async () => {
             try {
               await deleteAlert(alertId);
+              await developmentNotificationService.cancelAlert(alertId);
               setAlerts((prev) => prev.filter((alert) => alert.id !== alertId));
 
               Haptics.notificationAsync(
@@ -175,7 +252,7 @@ export default function AlertsScreen() {
   };
 
   const AlertCard = ({ alert }) => (
-    <View
+    <TouchableOpacity
       style={[
         commonStyles.card,
         {
@@ -185,6 +262,7 @@ export default function AlertsScreen() {
           borderLeftColor: getAlertColor(alert.type),
         },
       ]}
+      onPress={() => openAlertModal(alert.type, alert)}
     >
       <View style={[commonStyles.row, { alignItems: "flex-start" }]}>
         <View
@@ -259,22 +337,44 @@ export default function AlertsScreen() {
               />
             </View>
 
-            <TouchableOpacity
-              onPress={() => handleDeleteAlert(alert.id, alert.type)}
-              style={{
-                padding: theme.spacing.xs,
-              }}
-            >
-              <Ionicons
-                name="trash-outline"
-                size={18}
-                color={theme.colors.textSecondary}
-              />
-            </TouchableOpacity>
+            <View style={[commonStyles.row, { alignItems: "center" }]}>
+              <TouchableOpacity
+                onPress={(e) => {
+                  e.stopPropagation();
+                  openAlertModal(alert.type, alert);
+                }}
+                style={{
+                  padding: theme.spacing.xs,
+                  marginRight: theme.spacing.xs,
+                }}
+              >
+                <Ionicons
+                  name="create-outline"
+                  size={18}
+                  color={theme.colors.primary}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={(e) => {
+                  e.stopPropagation();
+                  handleDeleteAlert(alert.id, alert.type);
+                }}
+                style={{
+                  padding: theme.spacing.xs,
+                }}
+              >
+                <Ionicons
+                  name="trash-outline"
+                  size={18}
+                  color={theme.colors.textSecondary}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   if (loading) {
@@ -429,28 +529,71 @@ export default function AlertsScreen() {
             </View>
           </View>
 
-          {/* Add Alert Button */}
-          <TouchableOpacity
-            style={[
-              commonStyles.button,
-              {
-                marginHorizontal: theme.spacing.md,
-                marginBottom: theme.spacing.lg,
-                backgroundColor: theme.colors.primary,
-              },
-            ]}
-            onPress={handleAddAlert}
-          >
-            <Ionicons name="add" size={20} color={theme.colors.surface} />
-            <Text
+          {/* Quick Setup Buttons */}
+          <View style={{ marginHorizontal: theme.spacing.md, marginBottom: theme.spacing.lg }}>
+            <TouchableOpacity
               style={[
-                commonStyles.buttonText,
-                { marginLeft: theme.spacing.sm },
+                commonStyles.button,
+                {
+                  backgroundColor: '#4ECDC4', // Water blue
+                  marginBottom: theme.spacing.sm,
+                },
               ]}
+              onPress={handleSetupWaterReminders}
             >
-              Add New Alert
-            </Text>
-          </TouchableOpacity>
+              <Ionicons name="water" size={20} color={theme.colors.surface} />
+              <Text
+                style={[
+                  commonStyles.buttonText,
+                  { color: theme.colors.surface, marginLeft: theme.spacing.sm },
+                ]}
+              >
+                Setup Water Reminders (2L/day)
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                commonStyles.button,
+                {
+                  backgroundColor: theme.colors.primary,
+                  marginBottom: theme.spacing.sm,
+                },
+              ]}
+              onPress={handleAddAlert}
+            >
+              <Ionicons name="add" size={20} color={theme.colors.surface} />
+              <Text
+                style={[
+                  commonStyles.buttonText,
+                  { marginLeft: theme.spacing.sm },
+                ]}
+              >
+                Add Custom Alert
+              </Text>
+            </TouchableOpacity>
+
+            {/* Test Notification Button */}
+            <TouchableOpacity
+              style={[
+                commonStyles.button,
+                {
+                  backgroundColor: theme.colors.warning,
+                },
+              ]}
+              onPress={handleTestNotification}
+            >
+              <Ionicons name="flask" size={20} color={theme.colors.text} />
+              <Text
+                style={[
+                  commonStyles.buttonText,
+                  { marginLeft: theme.spacing.sm },
+                ]}
+              >
+                Test Notification 🧪
+              </Text>
+            </TouchableOpacity>
+          </View>
 
           {/* Alerts List */}
           {alerts.length === 0 ? (
@@ -494,8 +637,10 @@ export default function AlertsScreen() {
               </Text>
             </View>
           ) : (
-            alerts.map((alert) => <AlertCard key={alert.id} alert={alert} />)
+            alerts.map((alert, index) => <AlertCard key={`alert-${alert.id}-${index}`} alert={alert} />)
           )}
+
+
 
           {/* Instructions */}
           <View
@@ -528,6 +673,18 @@ export default function AlertsScreen() {
             </Text>
           </View>
         </ScrollView>
+
+        {/* Modern Alert Modal */}
+        <ModernAlertModal
+          visible={showAlertModal}
+          onClose={() => {
+            setShowAlertModal(false);
+            setEditingAlert(null);
+          }}
+          onSave={handleSaveAlert}
+          alertType={selectedAlertType}
+          editingAlert={editingAlert}
+        />
       </LinearGradient>
     </SafeAreaView>
   );

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
 import { theme } from '../styles/theme';
@@ -342,10 +343,11 @@ export default function GalleryScreen() {
   const filteredImages = getFilteredImages();
 
   return (
-    <LinearGradient
-      colors={[theme.colors.background, theme.colors.surface]}
-      style={commonStyles.container}
-    >
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
+      <LinearGradient
+        colors={[theme.colors.background, theme.colors.surface]}
+        style={commonStyles.container}
+      >
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingBottom: theme.spacing.xxl }}
@@ -503,6 +505,7 @@ export default function GalleryScreen() {
       </ScrollView>
 
       <ImageModal />
-    </LinearGradient>
+      </LinearGradient>
+    </SafeAreaView>
   );
 }

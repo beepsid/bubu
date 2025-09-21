@@ -80,7 +80,7 @@ export const addAlert = async (alertData) => {
   alerts.push(newAlert);
   
   // In a real app, you would schedule the notification here
-  console.log('Alert added:', newAlert);
+
   
   return newAlert;
 };
@@ -101,7 +101,7 @@ export const updateAlert = async (alertId, updates) => {
     updatedAt: new Date().toISOString()
   };
   
-  console.log('Alert updated:', alerts[alertIndex]);
+
   
   return alerts[alertIndex];
 };
@@ -118,7 +118,7 @@ export const deleteAlert = async (alertId) => {
   
   const deletedAlert = alerts.splice(alertIndex, 1)[0];
   
-  console.log('Alert deleted:', deletedAlert);
+
   
   return deletedAlert;
 };
@@ -150,7 +150,7 @@ export const toggleAlert = async (alertId) => {
   alert.enabled = !alert.enabled;
   alert.updatedAt = new Date().toISOString();
   
-  console.log('Alert toggled:', alert);
+
   
   return alert;
 };
@@ -167,7 +167,7 @@ export const markAlertTriggered = async (alertId) => {
   
   alert.lastTriggered = new Date().toISOString();
   
-  console.log('Alert marked as triggered:', alert);
+
   
   return alert;
 };
@@ -190,6 +190,50 @@ export const getAlertStats = async () => {
     inactive: totalAlerts - activeAlerts,
     byType: alertsByType
   };
+};
+
+/**
+ * Create default water reminders (2L per day = 8 glasses)
+ */
+export const createDefaultWaterAlerts = async () => {
+  // Clear existing water alerts first
+  alerts = alerts.filter(alert => alert.type !== 'water');
+  
+  const waterTimes = [
+    '08:00', // Morning wake up
+    '10:00', // Mid morning
+    '12:00', // Lunch
+    '14:00', // Afternoon
+    '16:00', // Late afternoon
+    '18:00', // Evening
+    '20:00', // Dinner time
+    '21:30'  // Before bed
+  ];
+  
+  const waterMessages = [
+    'Good morning! Start your day with water 💧',
+    'Mid-morning hydration time! 🌊',
+    'Lunch time water break! 💦',
+    'Afternoon refresh - drink up! 🥤',
+    'Keep the energy flowing with water! ⚡',
+    'Evening hydration check! 🌅',
+    'Dinner time water reminder! 🍽️',
+    'Last water of the day - sweet dreams! 🌙'
+  ];
+  
+  for (let i = 0; i < waterTimes.length; i++) {
+    await addAlert({
+      type: 'water',
+      message: waterMessages[i],
+      time: waterTimes[i],
+      frequency: 'daily',
+      enabled: true,
+      isDefault: true // Mark as default water alert
+    });
+  }
+  
+
+  return alerts.filter(alert => alert.type === 'water');
 };
 
 /**
@@ -231,7 +275,7 @@ export const createSampleAlerts = async () => {
     await addAlert(alertData);
   }
   
-  console.log('Sample alerts created');
+
   
   return alerts;
 };
@@ -242,7 +286,7 @@ export const createSampleAlerts = async () => {
 export const clearAllAlerts = async () => {
   alerts = [];
   nextId = 1;
-  console.log('All alerts cleared');
+
   return true;
 };
 
@@ -268,7 +312,7 @@ export const importAlerts = async (data) => {
   alerts = data.alerts;
   nextId = Math.max(...alerts.map(a => a.id), 0) + 1;
   
-  console.log('Alerts imported:', alerts.length);
+
   
   return alerts;
 };

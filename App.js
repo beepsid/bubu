@@ -7,15 +7,19 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
 
 // Screens
 import HomeScreen from "./src/screens/HomeScreen";
 import AlertsScreen from "./src/screens/AlertsScreen";
-import HealthScreen from "./src/screens/HealthScreen";
+import SlapCounterScreen from "./src/screens/SlapCounterScreen";
 import DiaryScreen from "./src/screens/DiaryScreen";
 import PoemsScreen from "./src/screens/PoemsScreen";
 import GalleryScreen from "./src/screens/GalleryScreen";
+
+// Components
+import NotificationWrapper from "./src/components/NotificationWrapper";
 
 // Services
 import { initializeDatabase } from "./src/services/database";
@@ -100,13 +104,17 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer onReady={onLayoutRootView}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <NavigationContainer onReady={onLayoutRootView}>
         <StatusBar
           barStyle="dark-content"
           backgroundColor={theme.colors.background}
+          translucent={false}
+          hidden={false}
         />
-        <CustomTabBarWrapper>
+        <NotificationWrapper>
+          <CustomTabBarWrapper>
           <Tab.Navigator
             screenOptions={({ route }) => ({
               tabBarIcon: ({ focused, color, size }) => {
@@ -121,8 +129,8 @@ export default function App() {
                       ? "notifications"
                       : "notifications-outline";
                     break;
-                  case "Health":
-                    iconName = focused ? "fitness" : "fitness-outline";
+                  case "Counter":
+                    iconName = focused ? "star" : "star-outline";
                     break;
                   case "Diary":
                     iconName = focused ? "book" : "book-outline";
@@ -158,24 +166,13 @@ export default function App() {
                 fontFamily: theme.fonts.medium,
                 marginTop: 4,
               },
-              headerStyle: {
-                backgroundColor: theme.colors.surface,
-                borderBottomColor: theme.colors.primary,
-                borderBottomWidth: 1,
-              },
-              headerTitleStyle: {
-                fontFamily: theme.fonts.elegant,
-                fontSize: theme.fontSizes.xl,
-                color: theme.colors.text,
-              },
-              headerTintColor: theme.colors.primary,
+              headerShown: false, // This will remove the header completely
             })}
           >
             <Tab.Screen
               name="Home"
               component={HomeScreen}
               options={{
-                title: "Bubu 💕",
                 tabBarLabel: "Home",
               }}
             />
@@ -183,23 +180,20 @@ export default function App() {
               name="Alerts"
               component={AlertsScreen}
               options={{
-                title: "Alerts",
                 tabBarLabel: "Alerts",
               }}
             />
             <Tab.Screen
-              name="Health"
-              component={HealthScreen}
+              name="Counter"
+              component={SlapCounterScreen}
               options={{
-                title: "Health",
-                tabBarLabel: "Health",
+                tabBarLabel: "Counter",
               }}
             />
             <Tab.Screen
               name="Diary"
               component={DiaryScreen}
               options={{
-                title: "His Diary",
                 tabBarLabel: "Diary",
               }}
             />
@@ -207,7 +201,6 @@ export default function App() {
               name="Poems"
               component={PoemsScreen}
               options={{
-                title: "Poems",
                 tabBarLabel: "Poems",
               }}
             />
@@ -215,13 +208,14 @@ export default function App() {
               name="Gallery"
               component={GalleryScreen}
               options={{
-                title: "Photos",
                 tabBarLabel: "Photos",
               }}
             />
           </Tab.Navigator>
         </CustomTabBarWrapper>
+        </NotificationWrapper>
       </NavigationContainer>
     </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

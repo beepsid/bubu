@@ -5,16 +5,15 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
-  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
 import { theme } from '../styles/theme';
 import { commonStyles } from '../styles/common';
-import { getSlapCount } from '../services/storage';
+import { getSlapCount } from '../services/googleSheets';
 import { getDiaryEntries, getPoems } from '../services/database';
 import { useNavigationSystem } from '../utils/navigationDetection';
 
@@ -25,7 +24,6 @@ export default function HomeScreen({ navigation }) {
   const [recentDiary, setRecentDiary] = useState(null);
   const [recentPoem, setRecentPoem] = useState(null);
   const [heartAnimation] = useState(new Animated.Value(1));
-  const insets = useSafeAreaInsets();
   const navigationSystem = useNavigationSystem();
 
   useEffect(() => {
@@ -46,11 +44,18 @@ export default function HomeScreen({ navigation }) {
         }),
       ])
     ).start();
-  }, []);
+
+    // Listen for navigation focus to refresh data when returning to home
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadHomeData();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const loadHomeData = async () => {
     try {
-      // Load slap count
+      // Load slap count from Google Sheets
       const count = await getSlapCount();
       setSlapCount(count);
 
@@ -66,7 +71,8 @@ export default function HomeScreen({ navigation }) {
         setRecentPoem(poems[0]);
       }
     } catch (error) {
-      console.error('Error loading home data:', error);
+      console.error('🏠 HomeScreen: Error loading home data:', error);
+      setSlapCount(0); // Fallback to 0 if Google Sheets fails
     }
   };
 
@@ -184,11 +190,11 @@ export default function HomeScreen({ navigation }) {
                 onPress={() => handleQuickNavigation('Alerts')}
               />
               <QuickActionCard
-                title="Health"
-                subtitle="Wellness Tracker"
-                icon="fitness"
+                title="Photos"
+                subtitle="Gallery"
+                icon="images"
                 color={theme.colors.success}
-                onPress={() => handleQuickNavigation('Health')}
+                onPress={() => handleQuickNavigation('Gallery')}
               />
             </View>
           </View>

@@ -1,31 +1,48 @@
+# Expo
+.expo/
+dist/
+web-build/
+.expo-shared/
+
 # Dependencies
 node_modules/
+jspm_packages/
+
+# Environment variables - IMPORTANT: Contains API keys
+.env
+.env.local
+.env.production
+.env.development
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
-# Build outputs
-dist/
-build/
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Capacitor
-android/
-ios/
-.capacitor/
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Optional npm cache directory
+.npm
 
-# Firebase (if you add it later)
-firebase-config.js
-.firebase/
-firebase-debug.log
+# Optional REPL history
+.node_repl_history
 
-# IDE files
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# IDE and Editor files
 .vscode/
 .idea/
 *.swp
@@ -41,174 +58,38 @@ firebase-debug.log
 ehthumbs.db
 Thumbs.db
 
-# Logs
-logs
-*.log
+# Android
+*.apk
+*.aab
+android/app/build/
+android/build/
+android/.gradle/
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+# iOS
+*.ipa
+ios/build/
+ios/Pods/
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
 
-# Coverage directory used by tools like istanbul
-coverage/
+# Temporary files
+*.tmp
+*.temp
+*.cache
 
-# Temporary folders
-tmp/
-temp/
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# next.js build output
-.next
-
-# nuxt.js build output
-.nuxt
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# Personal/sensitive files
-*.key
-*.pem
-*.p12
-*.mobileprovision
-google-services.json
-GoogleService-Info.plist
-
-# Personal Content - Keep Private
-# Diary entries
-content/diary/*.txt
-content/diary/*
-!content/diary/README.md
-!content/diary/.gitkeep
-src/data/diary/
-diary/
-diaries/
-
-# Poems and personal writings
-content/poems/*.txt
-content/poems/*
-!content/poems/README.md
-!content/poems/.gitkeep
-src/data/poems/
-poems/
-writings/
-
-# Personal photos and images
-content/photos/
-content/images/
-assets/personal/
-assets/photos/
-assets/images/gallery/
-photos/
-images/personal/
-
-# Google Sheets API credentials and config
-google-sheets-config.js
-googlesheets-config.js
-*google*config*.js
-*sheets*config*.js
-
-# Any files with actual API keys or credentials
-*API_KEY*
-*SHEET_ID*
-*api-key*
-*sheet-id*
-*credentials*
-*secrets*
-
-# Personal data and databases
+# Database files (if any local SQLite files)
 *.db
 *.sqlite
 *.sqlite3
-personal-data/
-user-data/
 
-# Health and tracking data
-health-data/
-tracking-data/
-personal-stats/
+# Backup files
+*.bak
+*.backup
 
-# Any personal configuration
-personal-config.json
-user-settings.json
-private-settings.json
+# Test files and utilities (if any are added back)
+src/utils/test*
+src/services/test*
 
-# Backup files with personal content
-*-backup.json
-*-personal.json
-*-private.json
-
-# Personal notes and documents
-notes/
-personal-notes/
-private-notes/
-*.personal.md
-*.private.md
-
-# Keep README files but ignore personal content
-# README.md files are kept for documentation
-
-# Specific personal file patterns
-*.diary
-*.poem
-*.personal
-*.private
-*-personal.*
-*-private.*
-
-# Love letters and personal messages
-love-letters/
-messages/
-personal-messages/
-
-# Any file with "bubu" personal content (keep app name but not personal content)
-*bubu-personal*
-*bubu-private*
-
-# Temporary personal files
-temp-personal/
-draft-poems/
-draft-diary/
-
-# Actual personal content files (but keep sample/template files)
-*real-*
-*actual-*
-*my-*
-*her-*
-*girlfriend-*
-*boyfriend-*
+# Build artifacts
+build/
+dist/
