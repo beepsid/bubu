@@ -1,4 +1,4 @@
-# Bubu - Relation Android App
+# Bubu - His Android App
 
 A private, offline-first React Native app built for relations.
 
