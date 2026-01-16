@@ -1,6 +1,6 @@
-# Bubu 💕 - Romantic Android App
+# Bubu - Relation Android App
 
-A private, offline-first React Native app built with love as the perfect birthday gift for your girlfriend.
+A private, offline-first React Native app built for relations.
 
 ## 🎁 **What This App Does**
 
@@ -9,8 +9,8 @@ A beautiful, romantic Android app with 6 special features:
 - 👋 **Slap Counter** - Fun counter with secret admin controls & Google Sheets sync
 - 🔔 **Smart Alerts** - Personalized reminders for health, medication, and daily activities
 - 💪 **Health Tracker** - Wellness tracking for water, sleep, exercise, mood, and more
-- 📖 **His Diary** - Read-only romantic diary entries from you to her
-- 🎭 **Poems** - Collection of love poems written by you
+- 📖 **His Diary** - Read-only diary entries from you to her
+- 🎭 **Poems** - Collection of poems written by you
 - 📸 **Photo Gallery** - Private photo collection with favorites
 
 ## 🎁 Features
@@ -18,7 +18,7 @@ A beautiful, romantic Android app with 6 special features:
 ### 👋 **Slap Counter**
 
 - Fun, affectionate counter with heart animations
-- Hidden admin button (5 taps on heart) for boyfriend to increment
+- Hidden admin button (5 taps on heart) for him to increment
 - Online sync with Google Sheets API
 - Offline-first with automatic sync when online
 
@@ -38,17 +38,17 @@ A beautiful, romantic Android app with 6 special features:
 
 ### 📖 **His Diary (Read-Only)**
 
-- Romantic diary entries written by boyfriend
+- Diary entries written by him
 - Beautiful typography and elegant design
-- Read-only for girlfriend - she can only view, not edit
+- Read-only for her - she can only view, not edit
 - Preloaded with sample love messages
 
 ### 🎭 **Poems Collection**
 
 - Categorized poems written from the heart
-- Elegant script typography for romantic feel
+- Elegant script typography for feel
 - Read-only poetry collection
-- Categories: Love, Beauty, Forever, Daily Life
+- Categories: Beauty, Daily Life, etc
 
 ### 📸 **Photo Gallery**
 
@@ -94,8 +94,8 @@ A beautiful, romantic Android app with 6 special features:
 
 5. **Customize Content**
    - Edit diary entries in `src/services/dataSeeder.js`
-   - Add your own poems and love messages
-   - Personalize the romantic messages throughout the app
+   - Add your own poems and messages
+   - Personalize the messages throughout the app
 
 ### Running the App
 
@@ -114,7 +114,7 @@ expo build:android
 
 ### Theme Colors
 
-Edit `src/styles/theme.js` to customize the romantic color palette:
+Edit `src/styles/theme.js` to customize the color palette:
 
 ```javascript
 colors: {
@@ -130,7 +130,7 @@ colors: {
 - **Diary Entries**: Edit `sampleDiaryEntries` in `src/services/dataSeeder.js`
 - **Poems**: Edit `samplePoems` in `src/services/dataSeeder.js`
 - **Gallery**: Replace images in `assets/images/gallery/`
-- **Messages**: Update romantic messages throughout the screens
+- **Messages**: Update messages throughout the screens
 
 ### App Identity
 
@@ -150,7 +150,7 @@ colors: {
 
 See `PRIVACY.md` for complete details on what's private vs. what's shared.
 
-## 🔐 Secret Features (For Boyfriend)
+## 🔐 Secret Features (For Him)
 
 ### Hidden Slap Counter Increment
 
@@ -162,7 +162,7 @@ See `PRIVACY.md` for complete details on what's private vs. what's shared.
 
 - All diary entries and poems are preloaded during app installation
 - Use the database functions to add more content programmatically
-- Period data can be managed through the calendar interface
+- Data can be managed through the calendar interface
 
 ## 📱 Google Sheets Integration
 
@@ -212,12 +212,12 @@ bubu-app/
 └── package.json           # Dependencies
 ```
 
-## 💕 Romantic Touches
+## Special Touches
 
 - **Heart Animations**: Floating hearts on slap counter increment
 - **Soft Color Palette**: Pastel pinks, lavenders, and creams
 - **Elegant Typography**: Mix of serif, sans-serif, and script fonts
-- **Personal Messages**: Romantic quotes and messages throughout
+- **Personal Messages**: Quotes and messages throughout
 - **Gentle Haptics**: Subtle vibrations for interactions
 - **Smooth Transitions**: Elegant animations between screens
 
